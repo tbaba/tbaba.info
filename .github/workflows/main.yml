@@ -2,7 +2,7 @@ name: Deploy to S3
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -17,12 +17,12 @@ jobs:
         uses: actions/setup-node@v2.1.4
         with:
           node-version: '12.x'
-      
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-acces-key-id: ${{AWS_ACCESS_KEY_ID}}
-          aws-secret-access-key: ${{AWS_SECRET_ACCESS_KEY}}
+          aws-acces-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Cache dependencies
         uses: actions/cache@v2.1.4
@@ -31,11 +31,11 @@ jobs:
           key: ${{runner.os}}-node-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{runner.os}}-node-
-          
+
       - name: Generate files
         run: yarn build
-      
+
       - name: Upload files to S3
         env:
-          S3_BUCKET_NAME: ${{ S3_BUCKET_NAME }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
         run: aws s3 sync ./out s3://$S3_BUCKET_NAME/ --quiet
