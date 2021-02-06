@@ -7,6 +7,8 @@ resource "aws_cloudfront_origin_access_identity" "site" {
 }
 
 resource "aws_cloudfront_distribution" "site" {
+  aliases = [var.site_domain]
+
   origin {
     domain_name = aws_s3_bucket.tbaba_info.bucket_regional_domain_name
     origin_id   = local.s3_origin_id
@@ -48,6 +50,8 @@ resource "aws_cloudfront_distribution" "site" {
   price_class = "PriceClass_200"
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn      = aws_acm_certificate_validation.acm_cert.certificate_arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1"
   }
 }
