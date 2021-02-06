@@ -54,7 +54,3 @@ resource "aws_iam_access_key" "tbaba_info_access_keys" {
   user    = aws_iam_user.tbaba_info.name
   pgp_key = var.pgp_key
 }
-
-output "tbaba_info_secret" {
-  value = aws_iam_access_key.tbaba_info_access_keys.encrypted_secret
-}
