@@ -2,3 +2,7 @@ node_modules/
 .next/
 out/
 infra/.terraform/
+
+infra/secret.gpg
+infra/terraform.tfstate
+infra/terraform.tfstate.backup
