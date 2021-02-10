@@ -9,6 +9,9 @@ phases:
     commands:
       - npm install --global yarn
       - echo $(yarn --version)
+      - yarn install
+      - pip install awscli
   build:
     commands:
-      - echo $(ls -la)
+      - yarn build
+      - aws s3 sync ./out s3://$S3_BUCKET_NAME/ --quiet
