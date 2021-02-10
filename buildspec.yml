@@ -14,4 +14,4 @@ phases:
   build:
     commands:
       - yarn build
-      - aws s3 sync ./out s3://$S3_BUCKET_NAME/ --quiet
+      - aws s3 sync ./out s3://$S3_BUCKET_NAME/
